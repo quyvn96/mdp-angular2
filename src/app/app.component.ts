@@ -1,6 +1,4 @@
 import { Component,AfterViewChecked,ElementRef } from '@angular/core';
-import { elementDef } from '@angular/core/src/view';
-import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-root',
