@@ -28,23 +28,18 @@
           <div class="menu_section">
             <h3>General</h3>
             <ul class="nav side-menu">
-              <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
-                <ul class="nav child_menu">
-                  <li><a href="index.html">Dashboard</a></li>
-                  <li><a href="index2.html">Dashboard2</a></li>
-                  <li><a href="index3.html">Dashboard3</a></li>
-                </ul>
-              </li>
-              <li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
-                <ul class="nav child_menu">
-                  <li><a href="form.html">General Form</a></li>
-                  <li><a href="form_advanced.html">Advanced Components</a></li>
-                  <li><a href="form_validation.html">Form Validation</a></li>
-                  <li><a href="form_wizards.html">Form Wizard</a></li>
-                  <li><a href="form_upload.html">Form Upload</a></li>
-                  <li><a href="form_buttons.html">Form Buttons</a></li>
-                </ul>
-              </li>
+                <li><a routerLink="/main/home/index" routerLinkActive="active"><i class="fa fa-home"></i>Trang chủ</a>
+                </li>
+                <li><a><i class="fa fa-edit"></i> Hệ thống <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a routerLink="/main/role/index" routerLinkActive="active">Nhóm</a></li>
+                    <li><a routerLink="/main/function/index" routerLinkActive="active">Chức năng</a></li>
+                    <li><a routerLink="/main/user/index" routerLinkActive="active">Người dùng</a></li>
+                    <li><a routerLink="/main/activity/index" routerLinkActive="active">Nhật ký</a></li>
+                    <li><a routerLink="/main/error/index" routerLinkActive="active">Lỗi</a></li>
+                    <li><a routerLink="/main/setting/index" routerLinkActive="active">Cấu hình</a></li>
+                  </ul>
+                </li>
               <li><a><i class="fa fa-desktop"></i> UI Elements <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu">
                   <li><a href="general_elements.html">General Elements</a></li>
@@ -181,7 +176,7 @@
               <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
                 <li>
                   <a>
-                    <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                    <span class="image"><img src="{{user.avatar}}" alt="Profile Image" /></span>
                     <span>
                       <span>John Smith</span>
                       <span class="time">3 mins ago</span>
@@ -193,7 +188,7 @@
                 </li>
                 <li>
                   <a>
-                    <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                    <span class="image"><img src="{{user.avatar}}" alt="Profile Image" /></span>
                     <span>
                       <span>John Smith</span>
                       <span class="time">3 mins ago</span>
@@ -205,7 +200,7 @@
                 </li>
                 <li>
                   <a>
-                    <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                    <span class="image"><img src="{{user.avatar}}" alt="Profile Image" /></span>
                     <span>
                       <span>John Smith</span>
                       <span class="time">3 mins ago</span>
@@ -217,7 +212,7 @@
                 </li>
                 <li>
                   <a>
-                    <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                    <span class="image"><img src="{{user.avatar}}" alt="Profile Image" /></span>
                     <span>
                       <span>John Smith</span>
                       <span class="time">3 mins ago</span>
