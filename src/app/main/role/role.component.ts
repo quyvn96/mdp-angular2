@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from '../../core/services/data.service';
 import { ModalDirective } from 'ngx-bootstrap';
 import { NotificationService } from '../../core/services/notification.service';
-import { MessageConstants} from '../../core/common/message.constants';
+import { MessageConstants } from '../../core/common/message.constants';
 @Component({
   selector: 'app-role',
   templateUrl: './role.component.html',
@@ -40,12 +40,12 @@ export class RoleComponent implements OnInit {
     this.entity = {};
     this.addEditRoleModal.show();
   }
-  loadRole(id:any){
-    this._dataService.get('/api/appRole/detail/' + id).subscribe((response:any) =>{
+  loadRole(id: any) {
+    this._dataService.get('/api/appRole/detail/' + id).subscribe((response: any) => {
       this.entity = response;
     });
   }
-  showEditModal(id:any): void {
+  showEditModal(id: any): void {
     this.loadRole(id);
     this.addEditRoleModal.show();
   }
@@ -69,5 +69,14 @@ export class RoleComponent implements OnInit {
           }, error => this._dataService.handleError(error));
       }
     }
+  }
+  deleteItem(id: any) {
+    this._notificationService.printConfirmationDialog(MessageConstants.CONFIRM_DELETE_MSG, () => this.deleteItemConfirm(id));
+  }
+  deleteItemConfirm(id: any) {
+    this._dataService.delete('/api/appRole/delete', 'id', id).subscribe((response: Response) => {
+      this._notificationService.printSuccessMessage(MessageConstants.DELETED_OK_MSG);
+      this.loadData();
+    });
   }
 }
