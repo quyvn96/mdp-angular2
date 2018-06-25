@@ -40,7 +40,17 @@ export class RoleComponent implements OnInit {
     this.entity = {};
     this.addEditRoleModal.show();
   }
+  loadRole(id:any){
+    this._dataService.get('/api/appRole/detail/' + id).subscribe((response:any) =>{
+      this.entity = response;
+    });
+  }
+  showEditModal(id:any): void {
+    this.loadRole(id);
+    this.addEditRoleModal.show();
+  }
   saveChange(valid: boolean) {
+    debugger;
     if (valid) {
       if (this.entity.Id == undefined) {
         this._dataService.post('/api/appRole/add', JSON.stringify(this.entity))
