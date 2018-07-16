@@ -1,18 +1,20 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from '../../core/services/data.service';
 import { ModalDirective } from 'ngx-bootstrap';
+import { UploadService } from '../../core/services/upload.service'
 import { NotificationService } from '../../core/services/notification.service';
 import { MessageConstants } from '../../core/common/message.constants';
+import { SystemConstants } from '../../core/common/system.constants';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
-declare var moment:any;
+declare var moment: any;
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-  @ViewChild('addEditUserModal')
-  public addEditUserModal: ModalDirective;
+  @ViewChild('addEditUserModal') public addEditUserModal: ModalDirective;
+  @ViewChild('avatar') avatar;
   public pageIndex: number = 1;
   public pageSize: number = 10;
   public pageDisplay: number = 10;
@@ -23,6 +25,7 @@ export class UserComponent implements OnInit {
   public myRoles: string[] = [];
   public allRoles: IMultiSelectOption[] = [];
   public roles: any[];
+  public baseFolder:string = SystemConstants.BASE_API;
 
   public dateOptions: any = {
     locale: { format: 'DD/MM/YYYY' },
@@ -30,7 +33,9 @@ export class UserComponent implements OnInit {
     singleDatePicker: true
   };
 
-  constructor(private _dataService: DataService, private _notificationService: NotificationService) { }
+  constructor(private _dataService: DataService,
+    private _notificationService: NotificationService,
+    private _uploadService: UploadService) { }
 
   ngOnInit() {
     this.loadRoles();
@@ -77,23 +82,40 @@ export class UserComponent implements OnInit {
     this.addEditUserModal.show();
   }
   saveChange(valid: boolean) {
+    debugger;
     if (valid) {
-      if (this.entity.Id == undefined) {
-        this._dataService.post('/api/appUser/add', JSON.stringify(this.entity))
-          .subscribe((response: any) => {
-            this.loadData();
-            this.addEditUserModal.hide();
-            this._notificationService.printSuccessMessage(MessageConstants.CREATED_OK_MSG);
-          }, error => this._dataService.handleError(error));
+      this.entity.Roles = this.myRoles;
+      let file = this.avatar.nativeElement;
+      if (file.files.length > 0) {
+        this._uploadService.postWithFile('/api/upload/saveImage', null, file.files)
+          .then((imageUrl: string) => {
+            this.entity.Avatr = imageUrl;
+          }).then(() => {
+            this.saveData();
+          })
       }
       else {
-        this._dataService.put('/api/appUser/update', JSON.stringify(this.entity))
-          .subscribe((response: any) => {
-            this.loadData();
-            this.addEditUserModal.hide();
-            this._notificationService.printSuccessMessage(MessageConstants.UPDATED_OK_MSG);
-          }, error => this._dataService.handleError(error));
+        this.saveData();
       }
+
+    }
+  }
+  saveData() {
+    if (this.entity.Id == undefined) {
+      this._dataService.post('/api/appUser/add', JSON.stringify(this.entity))
+        .subscribe((response: any) => {
+          this.loadData();
+          this.addEditUserModal.hide();
+          this._notificationService.printSuccessMessage(MessageConstants.CREATED_OK_MSG);
+        }, error => this._dataService.handleError(error));
+    }
+    else {
+      this._dataService.put('/api/appUser/update', JSON.stringify(this.entity))
+        .subscribe((response: any) => {
+          this.loadData();
+          this.addEditUserModal.hide();
+          this._notificationService.printSuccessMessage(MessageConstants.UPDATED_OK_MSG);
+        }, error => this._dataService.handleError(error));
     }
   }
   deleteItem(id: any) {

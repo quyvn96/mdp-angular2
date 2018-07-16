@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UserComponent } from './user.component';
 import { Routes, RouterModule } from '@angular/router';
 import { DataService } from '../../core/services/data.service';
+import { UploadService } from '../../core/services/upload.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { PaginationModule,ModalModule } from 'ngx-bootstrap';
 import { FormsModule } from '@angular/forms';
@@ -22,7 +23,7 @@ const userRoutes: Routes = [
     ModalModule.forRoot(),
     RouterModule.forChild(userRoutes)
   ],
-  providers: [DataService, NotificationService],
+  providers: [DataService, NotificationService,UploadService],
   declarations: [UserComponent]
 })
 export class UserModule { }
