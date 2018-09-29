@@ -1,3 +1,42 @@
-<p>
-  function works!
-</p>
+<div class="page-title">
+  <div class="title_left">
+    <h3>Danh sách người dùng</h3>
+  </div>
+
+  <div class="title_right">
+    <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+      <div class="input-group">
+        <input type="text" class="form-control" name="filter" (keyup.enter)="loadData()" [(ngModel)]="filter" placeholder="Từ khóa...">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button" (click)="loadData()">Tìm kiếm</button>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="clearfix"></div>
+
+<div class="row">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <ul class="nav navbar-right panel_toolbox">
+
+          <li>
+            <button class="btn btn-primary" (click)="showAddModal()">Thêm mới</button>
+          </li>
+        </ul>
+        <div class="clearfix">
+          <tree-root #treeFunction [nodes]='_functionHierachy'>
+            <ng-template #treeNodeTemplate let-node let-index="index">
+              <span>{{node.data.Name}}</span>
+              <button (click)="go($event)">Custom Action</button>
+            </ng-template>
+          </tree-root>
+        </div>
+      </div>
+      <div class="x_content">
+      </div>
+    </div>
+  </div>
